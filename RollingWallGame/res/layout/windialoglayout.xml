@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:id="@+id/winlayout"
+        >
+    <TextView android:id="@+id/windialogyouwon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentTop="true"
+              android:text="You won!"
+              android:textSize="16dp"/>
+    <TextView
+            android:id="@+id/windialogtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="12dp"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/windialogredobutton"
+            android:text="Back"
+            android:background="@drawable/btn_yellow"
+            style="@style/ButtonText"
+            android:textSize="9dp"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/windialogforwardbutton"
+            android:text="Next"
+            android:background="@drawable/btn_yellow"
+            style="@style/ButtonText"
+            android:textSize="9dp"/>
+</RelativeLayout>

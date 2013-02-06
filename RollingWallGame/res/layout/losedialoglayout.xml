@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:id="@+id/winlayout"
+        >
+    <TextView android:id="@+id/losedialogyoulose"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentTop="true"
+              android:text="Sorry)="
+              android:textSize="16dp"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/losedialogbackbutton"
+            android:text="Back"
+            android:background="@drawable/btn_yellow"
+            style="@style/ButtonText"
+            android:textSize="9dp"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/losedialogredobutton"
+            android:text="Retry"
+            android:background="@drawable/btn_yellow"
+            style="@style/ButtonText"
+            android:textSize="9dp"/>
+</RelativeLayout>
