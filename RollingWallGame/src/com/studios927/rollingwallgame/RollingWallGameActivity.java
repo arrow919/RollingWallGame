@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.R;
+import com.studios927.rollingwallgame.gameworkings.UpdateThread;
+import com.studios927.rollingwallgame.ui.GameSurfaceView;
 
 public class RollingWallGameActivity extends Activity {
 	private Button worldSelect;
 	private Button support;
+
+	private GameSurfaceView gameSurface;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -25,7 +30,7 @@ public class RollingWallGameActivity extends Activity {
 		worldSelect.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View args) {
 
 				Intent intent = new Intent(getApplicationContext(),
 						WorldSelectActivity.class);
@@ -43,7 +48,25 @@ public class RollingWallGameActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		ViewGroup mainLayout = (ViewGroup) findViewById(R.id.mainlayout);
+		gameSurface = new GameSurfaceView(getApplicationContext(), 0, 0);
+		gameSurface.setMenuOrGame(true);
+		gameSurface.setBoundaries(200, 200);
+		mainLayout.addView(gameSurface);
+		mainLayout.removeView(worldSelect);
+		mainLayout.addView(worldSelect);
+		mainLayout.removeView(support);
+		mainLayout.addView(support);
+		UpdateThread
+				.setOrientation(((WindowManager) getSystemService(WINDOW_SERVICE))
+						.getDefaultDisplay().getOrientation());
 
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		gameSurface.resume();
 	}
 
 	private void makeFullScreen() {
@@ -51,4 +74,17 @@ public class RollingWallGameActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		gameSurface.pause();
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy()
+		gameSurface.killThread();
+	}
+
 }
