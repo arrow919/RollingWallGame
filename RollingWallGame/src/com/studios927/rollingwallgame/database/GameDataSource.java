@@ -64,6 +64,7 @@ public class GameDataSource {
             }
             cursor.moveToNext();
         }
+        cursor.close();
         return last;
     }
 

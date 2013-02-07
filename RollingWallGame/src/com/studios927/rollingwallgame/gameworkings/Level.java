@@ -49,11 +49,6 @@ public class Level {
         }
         this.circles = new Circle[circles.size()];
         circles.toArray(this.circles);
-        System.out.println("Player:" + player.getX() + ", " + player.getY());
-        for (int count = 0; count < this.circles.length; count++) {
-            System.out.println(this.circles[count].getX() + ", " + this.circles[count].getY());
-        }
-        System.out.println("Finish:" + finish.left + ", " + finish.top);
     }
 
     public boolean isTouchingEdge() {
@@ -66,10 +61,7 @@ public class Level {
         return false;
     }
 
-    public boolean isTouchingFinish() {
-        // System.out.println("Finish: " + finish.left + ", " + finish.top + ", " + finish.right + ", " + finish.bottom);
-        // System.out.println("Player: " + player.getX() + ", " + player.getY());
-        return player.getX() + 60 >= finish.right && player.getX() - 60 <= finish.left && player.getY() + 60 >= finish.bottom && player.getY() - 60 <= finish.top;
+    public boolean isTouchingFinish() { return player.getX() + 60 >= finish.right && player.getX() - 60 <= finish.left && player.getY() + 60 >= finish.bottom && player.getY() - 60 <= finish.top;
     }
 
     public void onDraw(Canvas canvas) {

@@ -44,8 +44,6 @@ public class LevelGridView extends ViewGroup {
         int height = (int) (float) (buttonDimension * (levelsPerColumn + ((levelsPerColumn - 1) * .1f)));
         xCenterOffset = (displayWidth - width) / 2;
         yCenterOffset = (int) ((displayHeight - height) / 2.5f);
-        System.out.println(width + ", " + displayWidth + ", " + xCenterOffset);
-        System.out.println(height + ", " + displayHeight + ", " + yCenterOffset);
         Button reusable;
         for (int countC = 0; countC < levelsPerColumn; countC++) {
             for (int countR = 0; countR < levelsPerRow; countR++) {

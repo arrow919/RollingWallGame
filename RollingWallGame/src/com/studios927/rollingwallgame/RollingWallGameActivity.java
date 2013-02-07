@@ -30,7 +30,7 @@ public class RollingWallGameActivity extends Activity {
 		worldSelect.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View args) {
 
 				Intent intent = new Intent(getApplicationContext(),
 						WorldSelectActivity.class);
@@ -48,29 +48,43 @@ public class RollingWallGameActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
+		ViewGroup mainLayout = (ViewGroup) findViewById(R.id.mainlayout);
 		gameSurface = new GameSurfaceView(getApplicationContext(), 0, 0);
 		gameSurface.setMenuOrGame(true);
 		gameSurface.setBoundaries(200, 200);
-		UpdateThread
-				.setOrientation(((WindowManager) getSystemService(WINDOW_SERVICE))
-						.getDefaultDisplay().getOrientation());
-		ViewGroup mainLayout = (ViewGroup) findViewById(R.id.mainlayout);
 		mainLayout.addView(gameSurface);
 		mainLayout.removeView(worldSelect);
 		mainLayout.addView(worldSelect);
 		mainLayout.removeView(support);
 		mainLayout.addView(support);
+		UpdateThread
+				.setOrientation(((WindowManager) getSystemService(WINDOW_SERVICE))
+						.getDefaultDisplay().getOrientation());
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		gameSurface.resume();
 	}
 
 	private void makeFullScreen() {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		gameSurface.pause();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		gameSurface.killThread();
 	}
 
 }

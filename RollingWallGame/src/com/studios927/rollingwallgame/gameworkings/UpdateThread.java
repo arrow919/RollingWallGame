@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.Message;
-import android.util.FloatMath;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
@@ -33,8 +32,8 @@ public class UpdateThread extends Thread {
 	private float[] orientData = new float[3];
 	private static int orientation;
 	private Handler handler;
-	private boolean menuOrGame = false;
-	private int xBoundary = 1000, yBoundary = 1000;
+	public boolean menuOrGame = false;
+	public int xBoundary = 1000, yBoundary = 1000;
 
 	public UpdateThread(SurfaceHolder surfaceHolder) {
 		black = new Paint(Color.BLACK);
@@ -97,7 +96,6 @@ public class UpdateThread extends Thread {
 
 	public static void setOrientation(int newOrientation) {
 		orientation = newOrientation;
-		System.out.println("THIS IS THE ORIENTATION: " + orientation);
 	}
 
 	public void onPause() {
@@ -105,9 +103,8 @@ public class UpdateThread extends Thread {
 	}
 
 	public void onResume() {
-		System.out.println("Starting");
-		alive = true;
 		lastTime = System.currentTimeMillis() - 1;
+		alive = true;
 		synchronized (this) {
 			running = true;
 			notify();
@@ -122,8 +119,6 @@ public class UpdateThread extends Thread {
 		}
 	}
 
-	int count;
-
 	private void FPSUpdate() {
 		totalUpdates += 1;
 		long newTime = System.currentTimeMillis();
@@ -132,7 +127,6 @@ public class UpdateThread extends Thread {
 		lastTime = newTime;
 		if (currentFPS > targetFPS) {
 			try {
-				// System.out.println("Sleeping");
 				sleep(50);
 			} catch (InterruptedException e) {
 
@@ -159,7 +153,6 @@ public class UpdateThread extends Thread {
 				Math.max(0, hundredths.length() - 1));
 		canvas.drawText(String.valueOf(seconds) + ":" + hundredths, 15, 20,
 				black);
-		// System.out.println(time);
 	}
 
 	public static int getCenterX() {

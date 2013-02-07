@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -71,12 +73,7 @@ public class GameSurfaceView extends SurfaceView implements
 		setFocusable(true);
 		sm = (SensorManager) getContext().getSystemService(
 				Context.SENSOR_SERVICE);
-
-		sm.registerListener(sl, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				SensorManager.SENSOR_DELAY_GAME);
-		sm.registerListener(sl,
-				sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-				SensorManager.SENSOR_DELAY_GAME);
+		registerListener();
 
 	}
 
@@ -86,7 +83,6 @@ public class GameSurfaceView extends SurfaceView implements
 		AssetManager assetManager = getContext().getAssets();
 		InputStream stream = null;
 		BufferedReader reader = null;
-		System.out.println(world + ", " + level);
 		try {
 			stream = assetManager.open((world) + "-" + (level));
 			reader = new BufferedReader(new InputStreamReader(stream));
@@ -122,29 +118,27 @@ public class GameSurfaceView extends SurfaceView implements
 
 	}
 
+	boolean created = false;
+
 	@Override
 	public void surfaceCreated(SurfaceHolder arg0) {
-
-		WindowManager wm = (WindowManager) getContext().getSystemService(
-				Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		updateThread.setCenter((int) display.getWidth() / 2,
-				(int) display.getHeight() / 2);
-		updateThread.start();
+		if (!created) {
+			created = true;
+			WindowManager wm = (WindowManager) getContext().getSystemService(
+					Context.WINDOW_SERVICE);
+			Display display = wm.getDefaultDisplay();
+			updateThread.setCenter((int) display.getWidth() / 2,
+					(int) display.getHeight() / 2);
+			Canvas canvas = arg0.lockCanvas();
+			canvas.drawColor(Color.WHITE);
+			arg0.unlockCanvasAndPost(canvas);
+			updateThread.start();
+		}
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
-
-		killThread();
-		while (updateThread.isAlive()) {
-			try {
-				updateThread.join();
-			} catch (InterruptedException e) {
-
-				e.printStackTrace();
-			}
-		}
+		
 	}
 
 	public void restart(int world, int level) {
@@ -153,12 +147,28 @@ public class GameSurfaceView extends SurfaceView implements
 		gameData = new GameDataSource(getContext());
 		gameData.open();
 		loadLevel();
+		boolean menuOrGame = updateThread.menuOrGame;
+		int xBoundary = updateThread.xBoundary;
+		int yBoundary = updateThread.yBoundary;
 		updateThread = new UpdateThread(getHolder());
+		updateThread.setMenuOrGame(menuOrGame);
+		updateThread.setBoundaries(xBoundary, yBoundary);
 		getHolder().addCallback(this);
 	}
 
-	public void killSensor() {
+	private void unregisterListener() {
 		sm.unregisterListener(sl);
+		registered = false;
+	}
+
+	private void registerListener() {
+		sm.registerListener(sl, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				SensorManager.SENSOR_DELAY_GAME);
+		sm.registerListener(sl,
+				sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+				SensorManager.SENSOR_DELAY_GAME);
+
+		registered = true;
 	}
 
 	public void setUpdateThreadHandler(Handler handler) {
@@ -183,5 +193,23 @@ public class GameSurfaceView extends SurfaceView implements
 
 	public void setBoundaries(int x, int y) {
 		updateThread.setBoundaries(x, y);
+	}
+
+	boolean registered = false;
+
+	public void pause() {
+		updateThread.onPause();
+		gameData.close();
+		if (registered) {
+			unregisterListener();
+		}
+	}
+
+	public void resume() {
+		updateThread.onResume();
+		gameData.open();
+		if (!registered) {
+			registerListener();
+		}
 	}
 }
