@@ -48,10 +48,17 @@ public class RollingWallGameActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 		gameSurface = new GameSurfaceView(getApplicationContext(), 0, 0);
 		gameSurface.setMenuOrGame(true);
-		gameSurface.setBoundaries(250, 250);
-		UpdateThread.setOrientation(((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getOrientation());
+		gameSurface.setBoundaries(200, 200);
+		UpdateThread
+				.setOrientation(((WindowManager) getSystemService(WINDOW_SERVICE))
+						.getDefaultDisplay().getOrientation());
 		ViewGroup mainLayout = (ViewGroup) findViewById(R.id.mainlayout);
 		mainLayout.addView(gameSurface);
 		mainLayout.removeView(worldSelect);
