@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.R;
-import com.studios927.rollingwallgame.GameMessage;
+import com.studios927.rollingwallgame.gameworkings.GameMessage;
 
 /**
  * Created with IntelliJ IDEA.

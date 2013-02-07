@@ -9,6 +9,8 @@ import android.os.Message;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.studios927.rollingwallgame.gameworkings.GameMessage;
+import com.studios927.rollingwallgame.gameworkings.UpdateThread;
 import com.studios927.rollingwallgame.ui.GameSurfaceView;
 import com.studios927.rollingwallgame.ui.LoseDialog;
 import com.studios927.rollingwallgame.ui.WinDialog;

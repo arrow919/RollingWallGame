@@ -11,9 +11,9 @@ import android.widget.Button;
 
 import com.example.R;
 import com.studios927.rollingwallgame.GameActivity;
-import com.studios927.rollingwallgame.GameMessage;
 import com.studios927.rollingwallgame.LevelSelectActivity;
 import com.studios927.rollingwallgame.WorldSelectActivity;
+import com.studios927.rollingwallgame.gameworkings.GameMessage;
 
 public class LevelGridView extends ViewGroup {
     public static final int levelsPerColumn = 3;

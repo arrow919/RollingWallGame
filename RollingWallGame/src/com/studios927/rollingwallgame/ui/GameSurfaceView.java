@@ -18,9 +18,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-import com.studios927.rollingwallgame.Level;
-import com.studios927.rollingwallgame.UpdateThread;
 import com.studios927.rollingwallgame.database.GameDataSource;
+import com.studios927.rollingwallgame.gameworkings.Level;
+import com.studios927.rollingwallgame.gameworkings.UpdateThread;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private UpdateThread updateThread;

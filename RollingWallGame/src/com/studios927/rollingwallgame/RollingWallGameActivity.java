@@ -13,6 +13,7 @@ import com.example.R;
 
 public class RollingWallGameActivity extends Activity {
 	private Button worldSelect;
+	private Button support;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -25,15 +26,29 @@ public class RollingWallGameActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				
-				Intent intent = new Intent(getApplicationContext(), WorldSelectActivity.class);
+
+				Intent intent = new Intent(getApplicationContext(),
+						WorldSelectActivity.class);
 				startActivity(intent);
 			}
 
 		});
+
+		support = (Button) findViewById(R.id.supportbutton);
+		support.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View args) {
+				Intent intent = new Intent(getApplicationContext(),
+						SupportActivity.class);
+				startActivity(intent);
+			}
+		});
+
 	}
+
 	private void makeFullScreen() {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 }

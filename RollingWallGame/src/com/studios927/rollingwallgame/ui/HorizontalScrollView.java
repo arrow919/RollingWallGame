@@ -16,9 +16,8 @@ import android.widget.Button;
 
 import com.example.R;
 import com.studios927.rollingwallgame.LevelSelectActivity;
-import com.studios927.rollingwallgame.RomanNumeral;
-import com.studios927.rollingwallgame.Scroller;
 import com.studios927.rollingwallgame.WorldSelectActivity;
+import com.studios927.rollingwallgame.gameworkings.RomanNumeral;
 
 public class HorizontalScrollView extends ViewGroup {
 	private double lastTouchX;

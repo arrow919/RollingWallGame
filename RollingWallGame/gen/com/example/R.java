@@ -23,14 +23,15 @@ public final class R {
         public static final int lsback=0x7f060002;
         public static final int lslevelgrid=0x7f060001;
         public static final int redobutton=0x7f060000;
-        public static final int windialogforwardbutton=0x7f06000b;
-        public static final int windialogredobutton=0x7f06000a;
-        public static final int windialogtime=0x7f060009;
-        public static final int windialogyouwon=0x7f060008;
+        public static final int supportbutton=0x7f060007;
+        public static final int windialogforwardbutton=0x7f06000c;
+        public static final int windialogredobutton=0x7f06000b;
+        public static final int windialogtime=0x7f06000a;
+        public static final int windialogyouwon=0x7f060009;
         public static final int winlayout=0x7f060003;
-        public static final int worldselectbutton=0x7f060007;
-        public static final int wsback=0x7f06000d;
-        public static final int wslistview=0x7f06000c;
+        public static final int worldselectbutton=0x7f060008;
+        public static final int wsback=0x7f06000e;
+        public static final int wslistview=0x7f06000d;
     }
     public static final class layout {
         public static final int btn_level=0x7f030000;
@@ -39,14 +40,16 @@ public final class R {
         public static final int losedialoglayout=0x7f030003;
         public static final int main=0x7f030004;
         public static final int roundedbutton=0x7f030005;
-        public static final int windialoglayout=0x7f030006;
-        public static final int worldselectlayout=0x7f030007;
+        public static final int supportlayout=0x7f030006;
+        public static final int windialoglayout=0x7f030007;
+        public static final int worldselectlayout=0x7f030008;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
         public static final int back=0x7f040003;
         public static final int hello=0x7f040000;
         public static final int play=0x7f040002;
+        public static final int support=0x7f040006;
         public static final int type=0x7f040005;
         public static final int world=0x7f040004;
     }
