@@ -19,6 +19,7 @@ public class RollingWallGameActivity extends Activity {
 	private Button support;
 
 	private GameSurfaceView gameSurface;
+	private ViewGroup mainLayout;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -26,19 +27,18 @@ public class RollingWallGameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		makeFullScreen();
 		setContentView(R.layout.main);
+		mainLayout = (ViewGroup) findViewById(R.id.mainlayout);
 		worldSelect = (Button) findViewById(R.id.worldselectbutton);
 		worldSelect.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View args) {
-
 				Intent intent = new Intent(getApplicationContext(),
 						WorldSelectActivity.class);
 				startActivity(intent);
 			}
 
 		});
-
 		support = (Button) findViewById(R.id.supportbutton);
 		support.setOnClickListener(new OnClickListener() {
 			@Override
@@ -48,10 +48,9 @@ public class RollingWallGameActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		ViewGroup mainLayout = (ViewGroup) findViewById(R.id.mainlayout);
 		gameSurface = new GameSurfaceView(getApplicationContext(), 0, 0);
 		gameSurface.setMenuOrGame(true);
-		gameSurface.setBoundaries(200, 200);
+		gameSurface.setBoundaries(600, 600);
 		mainLayout.addView(gameSurface);
 		mainLayout.removeView(worldSelect);
 		mainLayout.addView(worldSelect);
@@ -60,13 +59,6 @@ public class RollingWallGameActivity extends Activity {
 		UpdateThread
 				.setOrientation(((WindowManager) getSystemService(WINDOW_SERVICE))
 						.getDefaultDisplay().getOrientation());
-
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		gameSurface.resume();
 	}
 
 	private void makeFullScreen() {
@@ -74,17 +66,4 @@ public class RollingWallGameActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		gameSurface.pause();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		gameSurface.killThread();
-	}
-
 }

@@ -111,6 +111,7 @@ public class GameSurfaceView extends SurfaceView implements
 
 	public void killThread() {
 		updateThread.kill();
+		unregisterListener();
 	}
 
 	@Override
@@ -133,15 +134,23 @@ public class GameSurfaceView extends SurfaceView implements
 			canvas.drawColor(Color.WHITE);
 			arg0.unlockCanvasAndPost(canvas);
 			updateThread.start();
+		} else {
+			updateThread.onResume();
+			gameData.open();
+			registerListener();
 		}
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder arg0) {
-		
+		updateThread.onPause();
+		gameData.close();
+		unregisterListener();
 	}
 
 	public void restart(int world, int level) {
+		registerListener();
+		killThread();
 		this.world = world;
 		this.level = level;
 		gameData = new GameDataSource(getContext());
@@ -154,21 +163,26 @@ public class GameSurfaceView extends SurfaceView implements
 		updateThread.setMenuOrGame(menuOrGame);
 		updateThread.setBoundaries(xBoundary, yBoundary);
 		getHolder().addCallback(this);
+		updateThread.start();
 	}
 
 	private void unregisterListener() {
-		sm.unregisterListener(sl);
-		registered = false;
+		if (registered) {
+			sm.unregisterListener(sl);
+			registered = false;
+		}
 	}
 
 	private void registerListener() {
-		sm.registerListener(sl, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				SensorManager.SENSOR_DELAY_GAME);
-		sm.registerListener(sl,
-				sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-				SensorManager.SENSOR_DELAY_GAME);
-
-		registered = true;
+		if (!registered) {
+			sm.registerListener(sl,
+					sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+					SensorManager.SENSOR_DELAY_GAME);
+			sm.registerListener(sl,
+					sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+					SensorManager.SENSOR_DELAY_GAME);
+			registered = true;
+		}
 	}
 
 	public void setUpdateThreadHandler(Handler handler) {
@@ -196,20 +210,4 @@ public class GameSurfaceView extends SurfaceView implements
 	}
 
 	boolean registered = false;
-
-	public void pause() {
-		updateThread.onPause();
-		gameData.close();
-		if (registered) {
-			unregisterListener();
-		}
-	}
-
-	public void resume() {
-		updateThread.onResume();
-		gameData.open();
-		if (!registered) {
-			registerListener();
-		}
-	}
 }

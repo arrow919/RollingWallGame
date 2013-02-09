@@ -37,18 +37,6 @@ public class GameActivity extends Activity {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		gameSurface.resume();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-		gameSurface.pause();
-	}
-
-	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		gameSurface.killThread();
@@ -99,6 +87,7 @@ public class GameActivity extends Activity {
 								setContentView(gameSurface);
 							}
 						} else if (GameMessage.BACK.equals(msg.obj)) {
+							gameSurface.killThread();
 							finish();
 						}
 					}
@@ -112,9 +101,9 @@ public class GameActivity extends Activity {
 					public void handleMessage(Message msg) {
 						if (GameMessage.RETRY.equals(msg.obj)) {
 							dialog.cancel();
-							gameSurface.killThread();
 							gameSurface.restart(world, level);
 						} else if (GameMessage.BACK.equals(msg.obj)) {
+							gameSurface.killThread();
 							dialog.cancel();
 							finish();
 						}

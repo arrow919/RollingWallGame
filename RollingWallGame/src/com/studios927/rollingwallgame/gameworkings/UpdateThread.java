@@ -91,7 +91,7 @@ public class UpdateThread extends Thread {
 				}
 			}
 		}
-
+		System.out.println("KILLING THREAD OMG I JUST DIED SAVE ME.");
 	}
 
 	public static void setOrientation(int newOrientation) {

@@ -33,6 +33,7 @@ public class WorldSelectActivity extends Activity {
             }
         });
         worlds = (HorizontalScrollView) findViewById(R.id.wslistview);
+        
     }
 
     @Override
